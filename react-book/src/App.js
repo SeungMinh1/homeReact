@@ -62,6 +62,7 @@ function App() {
                   {id:'3', title:'javascript', body:'javascript is'}])
   const [mode, setMode] = useState("WELCOME");
   const [id, setId] = useState(null)
+  const [nextId, setNextid] = useState(4);
   let title, body = null;
   for(let i=0; i<topics.length; i++){
     if(id === topics[i].id){
@@ -75,9 +76,13 @@ function App() {
     content = <Article title={title} body={body} onChangeMode={function(){}}/>
   }else if(mode === "CREATE"){
     content = <Create  onCreate={(title, body)=>{
-      const newTopic = {title:title, body:body} //id:nextId, 
-      topics.push(newTopic);
-      setTopics(topics)
+      const newTopic = {id:nextId, title:title, body:body} 
+      const newTopics = [...topics]
+      newTopics.push(newTopic);
+      setTopics(newTopics)
+      setMode('READ');
+      setId(nextId);
+      setNextid(nextId+1);
     }}></Create>
   }
   return (
